@@ -1,0 +1,12 @@
+name: test-opensuseleap
+summary: charm for testing OpenSUSE machines
+maintainer: marcmolla@gmail.com
+description: |
+  Simple charm that runs nginx
+tags:
+  # Replace "misc" with one or more whitelisted tags from this list:
+  # https://jujucharms.com/docs/stable/authors-charm-metadata
+  - misc
+subordinate: false
+series:
+ - opensuseleap
