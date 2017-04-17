@@ -14,4 +14,16 @@ You can copy a LXD ready OpenSUSE image using `lxc` client:
 ```bash
 lxc image copy images:opensuse/42.2 local: --alias juju/opensuseleap/amd64
 ```
+
+When the copy finishes, you can launch a new container
+```bash
+lxc launch juju/opensuseleap/amd64 imagesuse
+```
+
+and access to the bash
+
+```bash
+lxc exec imagesuse bash
+```
  
+### Basic software
