@@ -28,27 +28,45 @@ lxc exec imagesuse bash
  
 ### Basic software
 
-imagesuse:~ # zypper install cloud-init nano
+We need to install `cloud-init` as Juju uses it to install the Juju agent (`jujud`) in the machines. We also need an editor:
 
-enable cloud-init cloud-config and cloud-final
+```bash
+imagesuse:~ # zypper install cloud-init nano
+```
+
+In the `cloud-init` config file we have to comment the setting and updating of the hostname and we also have to add the nocloud data source:
+
+```bash
 
 imagesuse:~ # nano /etc/cloud/cloud.cfg
 
 #Comment set and update hostname
+#Add at the bottom of the file
 
+datasource_list: [ NoCloud, ConfigDrive, OpenNebula, DigitalOcean, Azure, AltCloud, OVF, MAAS, GCE, OpenStack, CloudSigma, SmartOS, Ec2, CloudStack, None ]
+```
+
+Next step is to clean zypper and ssh keys:
+
+```bash
 imagesuse:~ # zypper clean --all
 
 rm -f /etc/ssh/*key*
+```
+By default, sshd service is disabled and we need to start it:
 
-sudo nano /etc/cloud/cloud.cfg
-datasource_list: [ NoCloud, ConfigDrive, OpenNebula, DigitalOcean, Azure, AltCloud, OVF, MAAS, GCE, OpenStack, CloudSigma, SmartOS, Ec2, CloudStack, None ]
-
+```bash
 imagesuse:~ # systemctl unmask sshd.service
 Removed symlink /etc/systemd/system/sshd.service.
 imagesuse:~ # systemctl enable sshd.service
 Created symlink from /etc/systemd/system/multi-user.target.wants/sshd.service to /usr/lib/systemd/system/sshd.service.
 imagesuse:~ # systemctl start sshd.service
-imagesuse:~ # exit
+```
+and we do the same for `cloud-init`, `cloud-config` and `cloud-final` services.
+
+Finally, we exit from our OpenSUSE container
+
+###
 
 lxc publish imagesuse --alias opensuse/tmp --force
 lxc delete imagesuse --force
