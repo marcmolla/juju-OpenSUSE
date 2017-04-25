@@ -7,9 +7,12 @@
 # failing to account for a debconf question on a dependency, or trying to pull
 # from github without installing git first.
 
-
+#Install nginx
 zypper se -i nginx || zypper -n install nginx
 systemctl enable nginx
+
 status-set maintenance "Creating basic index.html"
-echo "<html><head title=\"Testing OpenSUSE Charm\"></head><body><h1>It works\!</h1></body></html>" > /srv/www/htdocs/index.html
+IP=`unit-get public-address`
+echo "<html><head title=\"Testing OpenSUSE Charm\"></head><body><h1>It works\! From $IP</h1></body></html>" > /srv/www/htdocs/index.html
+
 status-set active

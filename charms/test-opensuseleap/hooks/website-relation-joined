@@ -1,0 +1,6 @@
+#!/bin/bash
+
+IP=`unit-get public-address`
+PORT=80
+
+relation-set hostname=$IP private-address=$IP port=$PORT
