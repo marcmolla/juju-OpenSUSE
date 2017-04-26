@@ -38,3 +38,9 @@ juju bootstrap --config agent-metadata-url="http://10.190.55.1/tools/" localhost
 ```
 
 note that `10.190.55.1` is the IP address of my compute host in the `LXD` subnet.
+
+If you want to deploy opensuse charms with your tools, please change to devel stream:
+
+```bash
+juju model-config agent-stream=devel
+```
